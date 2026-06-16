@@ -213,7 +213,7 @@ document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
 // GitHub repos
 const GITHUB_USER = 'Lawliet-s';
-const PER_PAGE = 4;
+const PER_PAGE = 6;
 let allRepos = [];
 let displayedCount = 0;
 let repoFilter = '';
