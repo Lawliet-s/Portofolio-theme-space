@@ -953,13 +953,17 @@
       position: fixed;
       pointer-events: none;
       z-index: 99999;
-      font-size: 28px;
       transform: translate(-50%, -50%);
-      line-height: 1;
     }
 
-    .cursor-rocket.hover {
-      font-size: 36px;
+    .cursor-rocket img {
+      width: 28px;
+      height: auto;
+      display: block;
+    }
+
+    .cursor-rocket.hover img {
+      width: 36px;
     }
 
     .cursor-trail {
@@ -1137,7 +1141,7 @@
     </div>
   </div>
 
-  <div class="cursor-rocket" id="cursorRocket">🚀</div>
+  <div class="cursor-rocket" id="cursorRocket"><img src="image/komponen/roket lounch.png" alt="Rocket" /></div>
 
   <!-- Navbar -->
   <nav class="navbar" id="navbar">
