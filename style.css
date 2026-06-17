@@ -925,6 +925,16 @@ footer {
   transform: translate(-50%, -50%);
 }
 
+@media (hover: none) and (pointer: coarse) {
+  .cursor-rocket,
+  .cursor-trail {
+    display: none !important;
+  }
+  * {
+    cursor: auto !important;
+  }
+}
+
 /* Scroll reveal */
 .reveal {
   opacity: 0;
@@ -1196,11 +1206,15 @@ footer {
   body {
     padding: 70px 0 24px;
     align-items: center;
-    background: url('image/komponen/background.jpg') no-repeat center center fixed;
+    background: url('image/komponen/background-mobile.jpg') no-repeat center center fixed;
     background-size: cover;
   }
   .bg-video-wrapper {
     display: none;
+  }
+  * {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
   }
   .container {
     width: 100%;
