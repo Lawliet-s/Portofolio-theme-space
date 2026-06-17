@@ -1206,7 +1206,7 @@ footer {
   body {
     padding: 70px 0 24px;
     align-items: center;
-    background: url('image/komponen/background-mobile.jpg') no-repeat center center fixed;
+    background: url('image/komponen/background-mobile.png') no-repeat center center fixed;
     background-size: cover;
   }
   .bg-video-wrapper {
