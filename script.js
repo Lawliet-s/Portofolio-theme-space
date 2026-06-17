@@ -10,6 +10,15 @@ function hideLoader() {
   loader.classList.add('hidden');
   document.body.classList.remove('loading');
   setTimeout(() => { loader.style.display = 'none'; }, 500);
+  setTimeout(startBgVideo, 600);
+}
+
+function startBgVideo() {
+  var video = document.getElementById('bgVideo');
+  var wrapper = document.querySelector('.bg-video-wrapper');
+  if (video && wrapper && window.getComputedStyle(wrapper).display !== 'none') {
+    video.play().catch(function(){});
+  }
 }
 
 if (localStorage.getItem('visited')) {

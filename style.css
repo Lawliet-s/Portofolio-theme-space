@@ -1196,6 +1196,11 @@ footer {
   body {
     padding: 70px 0 24px;
     align-items: center;
+    background: url('image/komponen/background.jpg') no-repeat center center fixed;
+    background-size: cover;
+  }
+  .bg-video-wrapper {
+    display: none;
   }
   .container {
     width: 100%;
