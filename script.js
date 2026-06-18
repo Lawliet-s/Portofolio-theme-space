@@ -40,16 +40,16 @@ function spawnSmoke(count) {
     smoke.style.height = size + 'px';
     smoke.style.left = (20 + Math.random() * 60) + '%';
     smoke.style.top = (90 + Math.random() * 30) + '%';
-    smoke.style.animation = 'smoke-float ' + (0.6 + Math.random() * 0.6) + 's ease-out forwards';
-    smoke.style.animationDelay = (Math.random() * 0.4) + 's';
+    smoke.style.animation = 'smoke-float ' + (1.0 + Math.random() * 1.0) + 's ease-out forwards';
+    smoke.style.animationDelay = (Math.random() * 0.6) + 's';
     wrapper.appendChild(smoke);
-    setTimeout(() => smoke.remove(), 1400);
+    setTimeout(() => smoke.remove(), 2200);
   }
 }
 
 // Ready phase — smoke appears, no shake
 spawnSmoke(10);
-const readyInterval = setInterval(() => spawnSmoke(6), 500);
+const readyInterval = setInterval(() => spawnSmoke(6), 750);
 
 // Set phase
 setTimeout(() => {
@@ -62,9 +62,9 @@ setTimeout(() => {
   flame.style.height = '80px';
   flame.style.width = '38px';
   spawnSmoke(12);
-  const setInterval = setInterval(() => spawnSmoke(8), 400);
-  setTimeout(() => clearInterval(setInterval), 1400);
-}, 1200);
+  const setInterval = setInterval(() => spawnSmoke(8), 600);
+  setTimeout(() => clearInterval(setInterval), 2100);
+}, 1800);
 
 // Go! phase
 setTimeout(() => {
@@ -78,16 +78,16 @@ setTimeout(() => {
   flame.style.height = '100px';
   flame.style.width = '48px';
   spawnSmoke(16);
-  const goInterval = setInterval(() => spawnSmoke(12), 300);
+  const goInterval = setInterval(() => spawnSmoke(12), 450);
   setTimeout(() => {
     clearInterval(goInterval);
     rocketWrapper.classList.remove('go');
     flame.style.height = '';
     flame.style.width = '';
     rocketWrapper.classList.add('launch');
-    setTimeout(hideLoader, 400);
-  }, 1200);
-}, 2400);
+    setTimeout(hideLoader, 600);
+  }, 1800);
+}, 3600);
 
 // Cursor
 const rocket = document.getElementById('cursorRocket');
@@ -212,8 +212,7 @@ const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       entry.target.classList.add('active');
-    } else {
-      entry.target.classList.remove('active');
+      revealObserver.unobserve(entry.target);
     }
   });
 }, { threshold: 0.15 });
@@ -314,22 +313,36 @@ navLinks.querySelectorAll('a').forEach(link => {
 
 const backToTopFloat = document.getElementById('backToTopFloat');
 
+const sectionOffsets = [];
+function cacheSectionOffsets() {
+  sectionOffsets.length = 0;
+  document.querySelectorAll('.section, #home').forEach(section => {
+    sectionOffsets.push({ id: section.id, top: section.offsetTop - 120 });
+  });
+}
+cacheSectionOffsets();
+
+let ticking = false;
 window.addEventListener('scroll', () => {
   navbar.classList.toggle('scrolled', window.scrollY > 50);
   backToTopFloat.classList.toggle('visible', window.scrollY > 300);
 
-  const sections = document.querySelectorAll('.section, #home');
-  let current = 'home';
-  sections.forEach(section => {
-    const top = section.offsetTop - 120;
-    if (window.scrollY >= top) {
-      current = section.id;
-    }
-  });
-  navLinks.querySelectorAll('a').forEach(a => {
-    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
-  });
+  if (!ticking) {
+    requestAnimationFrame(() => {
+      let current = 'home';
+      for (const s of sectionOffsets) {
+        if (window.scrollY >= s.top) current = s.id;
+      }
+      navLinks.querySelectorAll('a').forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+      });
+      ticking = false;
+    });
+    ticking = true;
+  }
 });
+
+window.addEventListener('resize', cacheSectionOffsets);
 // Lightbox
 const lightbox = document.getElementById('lightbox');
 const lightboxImg = document.getElementById('lightboxImg');
